@@ -52,11 +52,11 @@ namespace TCT.Web.Helpers.Bootstrap
         /// <param name="activeClass"></param>
         /// <param name="inActiveClass"></param>
         /// <returns></returns>
-        public static MvcHtmlString IsActive(this HtmlHelper htmlHelper, string action, string controller, object routeValues, 
+        public static MvcHtmlString IsActive(this HtmlHelper htmlHelper, string action, string controller, object routeValues,
             string activeClass, string inActiveClass = "")
         {
             var routeData = htmlHelper.ViewContext.RouteData;
-            
+
             var routeAction = routeData.Values["action"].ToString();
             var routeController = routeData.Values["controller"].ToString();
             var areaPass = true;
@@ -70,16 +70,13 @@ namespace TCT.Web.Helpers.Bootstrap
                     .FirstOrDefault();
             if (area != null)
             {
+                var routeArea = "";
                 if (routeData.Values["area"] != null)
                 {
-                    var routeArea = routeData.Values["area"].ToString();
-                    areaPass = area.ToString().ToLower() == routeArea.ToLower();
+                    routeArea = routeData.Values["area"].ToString();
+
                 }
-                else
-                {
-                    //If no area is in routedata then this is a failure!
-                    areaPass = false;
-                }
+                areaPass = area.ToString().ToLower() == routeArea.ToLower();
             }
 
 
