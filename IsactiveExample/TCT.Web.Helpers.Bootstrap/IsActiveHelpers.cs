@@ -63,24 +63,47 @@ namespace TCT.Web.Helpers.Bootstrap
 
             //Get routevalue properties.
             var rvProps = routeValues.GetType().GetProperties();
-            //Get Area!
-            var area =
-                rvProps.Where(rv => rv.Name.ToLower() == "area")
-                    .Select(rv => rv.GetValue(routeValues, null))
-                    .FirstOrDefault();
-            if (area != null)
-            {
-                var routeArea = "";
-                if (routeData.Values["area"] != null)
-                {
-                    routeArea = routeData.Values["area"].ToString();
 
+
+            var pass = true;
+            if(rvProps.Count() > 0)
+            {
+                foreach(var rv in rvProps)
+                {
+                    if(routeData.Values[rv.Name.ToString()] != null)
+                    {
+                        var rd = routeData.Values[rv.Name.ToString()].ToString();
+                        var rvValue = rv.GetValue(routeValues);
+                        if (rd.ToLower() != rvValue.ToString())
+                        {
+                            pass = false;
+                        }
+                    }
                 }
-                areaPass = area.ToString().ToLower() == routeArea.ToLower();
             }
 
 
-            var returnActive = (controller == routeController && action == routeAction && areaPass);
+
+
+
+            //Get Area!
+            //var area =
+            //    rvProps.Where(rv => rv.Name.ToLower() == "area")
+            //        .Select(rv => rv.GetValue(routeValues, null))
+            //        .FirstOrDefault();
+            //if (area != null)
+            //{
+            //    var routeArea = "";
+            //    if (routeData.Values["area"] != null)
+            //    {
+            //        routeArea = routeData.Values["area"].ToString();
+
+            //    }
+            //    areaPass = area.ToString().ToLower() == routeArea.ToLower();
+            //}
+
+
+            var returnActive = (controller == routeController && action == routeAction && pass);
 
             return new MvcHtmlString(returnActive ? activeClass : inActiveClass);
         }
