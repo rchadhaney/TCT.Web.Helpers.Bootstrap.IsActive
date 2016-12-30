@@ -56,14 +56,13 @@ namespace TCT.Web.Helpers.Bootstrap
             string activeClass, string inActiveClass = "")
         {
             var routeData = htmlHelper.ViewContext.RouteData;
+            var routeTokens = htmlHelper.ViewContext.RouteData.DataTokens;
 
             var routeAction = routeData.Values["action"].ToString();
             var routeController = routeData.Values["controller"].ToString();
-            var areaPass = true;
 
             //Get routevalue properties.
             var rvProps = routeValues.GetType().GetProperties();
-
 
             var pass = true;
             if(rvProps.Count() > 0)
@@ -79,28 +78,17 @@ namespace TCT.Web.Helpers.Bootstrap
                             pass = false;
                         }
                     }
+                    if(routeTokens.ContainsKey(rv.Name.ToString()))
+                    {
+                        var rt = routeTokens[rv.Name.ToString()].ToString();
+                        var rvValue = rv.GetValue(routeValues);
+                        if(rt.ToLower() != rvValue.ToString().ToLower())
+                        {
+                            pass = false;
+                        }
+                    }
                 }
             }
-
-
-
-
-
-            //Get Area!
-            //var area =
-            //    rvProps.Where(rv => rv.Name.ToLower() == "area")
-            //        .Select(rv => rv.GetValue(routeValues, null))
-            //        .FirstOrDefault();
-            //if (area != null)
-            //{
-            //    var routeArea = "";
-            //    if (routeData.Values["area"] != null)
-            //    {
-            //        routeArea = routeData.Values["area"].ToString();
-
-            //    }
-            //    areaPass = area.ToString().ToLower() == routeArea.ToLower();
-            //}
 
 
             var returnActive = (controller == routeController && action == routeAction && pass);

@@ -23,9 +23,10 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li @Html.IsActive("Index", "Default", new { area = "Admin" },"class=\"active\"")>@Html.ActionLink("Admin", "Index", "Default", new { Area = "Admin" },new {})</li>
+                    <li @Html.IsActive("Index", "Default", new { area = "Host" }, "class=\"active\"")>@Html.ActionLink("Host", "Index", "Default", new { Area = "Host" }, new { })</li>
                     <li @Html.IsActive("Detail", "Default", new { area = "Admin", id = 1 }, "class=\"active\"")>@Html.ActionLink("Detail", "Detail", "Default", new { Area = "Admin", id = 1 }, new { })</li>
                     <li @Html.IsActive("Index", "Home", "class=\"active\"") >@Html.ActionLink("Home", "Index", "Home", new { Area = "" }, new { })</li>
-                    <li @Html.IsActive("Index", "About", "class=\"active\"")>@Html.ActionLink("About", "About", "Home", new { Area = "" }, new { })</li>
+                    <li @Html.IsActive("About", "Home", "class=\"active\"")>@Html.ActionLink("About", "About", "Home", new { Area = "" }, new { })</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")

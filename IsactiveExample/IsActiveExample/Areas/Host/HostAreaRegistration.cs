@@ -1,24 +1,24 @@
 ﻿using System.Web.Mvc;
 
-namespace IsActiveExample.Areas.Admin
+namespace IsActiveExample.Areas.Host
 {
-    public class AdminAreaRegistration : AreaRegistration 
+    public class HostAreaRegistration : AreaRegistration 
     {
         public override string AreaName 
         {
             get 
             {
-                return "Admin";
+                return "Host";
             }
         }
 
         public override void RegisterArea(AreaRegistrationContext context) 
         {
             context.MapRoute(
-                "Admin_default",
-                "Admin/{controller}/{action}/{id}",
+                "Host_default",
+                "Host/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional },
-                new[] { "IsActiveExample.Areas.Admin.Controllers" }
+                new[] { "IsActiveExample.Areas.Host.Controllers" }
             );
         }
     }
