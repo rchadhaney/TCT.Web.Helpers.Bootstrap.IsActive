@@ -58,8 +58,8 @@ namespace TCT.Web.Helpers.Bootstrap
             var routeData = htmlHelper.ViewContext.RouteData;
             var routeTokens = htmlHelper.ViewContext.RouteData.DataTokens;
 
-            var routeAction = routeData.Values["action"].ToString();
-            var routeController = routeData.Values["controller"].ToString();
+            var routeAction = routeData.Values["action"].ToString().ToLower();
+            var routeController = routeData.Values["controller"].ToString().ToLower();
 
             //Get routevalue properties.
             var rvProps = routeValues.GetType().GetProperties();
@@ -73,7 +73,7 @@ namespace TCT.Web.Helpers.Bootstrap
                     {
                         var rd = routeData.Values[rv.Name.ToString()].ToString();
                         var rvValue = rv.GetValue(routeValues);
-                        if (rd.ToLower() != rvValue.ToString())
+                        if (rd.ToLower() != rvValue.ToString().ToLower())
                         {
                             pass = false;
                         }
@@ -90,8 +90,8 @@ namespace TCT.Web.Helpers.Bootstrap
                 }
             }
 
-
-            var returnActive = (controller == routeController && action == routeAction && pass);
+            //Update to allow no action to be passed.
+            var returnActive = (controller.ToLower() == routeController && (action == null || action.ToLower() == routeAction ) && pass);
 
             return new MvcHtmlString(returnActive ? activeClass : inActiveClass);
         }
@@ -109,7 +109,7 @@ namespace TCT.Web.Helpers.Bootstrap
 
             var routeAction = routeData.Values["action"].ToString();
 
-            var returnActive = (action == routeAction);
+            var returnActive = (action.ToLower() == routeAction.ToLower());
 
             return new MvcHtmlString(returnActive ? activeClass : "");
         }
